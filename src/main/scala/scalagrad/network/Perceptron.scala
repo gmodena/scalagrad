@@ -3,6 +3,9 @@ package scalagrad.network
 import scalagrad.Var
 
 class Perceptron(val numberOfInputs : Int, val numberOfOutputs: List[Int], randomState: Option[Int] = None) extends Differentiable {
+  require(numberOfInputs > 0)
+  require(numberOfOutputs.nonEmpty)
+
   //noinspection ZeroIndexToHead
   val network: Iterable[Layer] = (numberOfInputs :: numberOfOutputs).sliding(2)
     .map(lst => Layer(lst(0), lst(1), randomState))

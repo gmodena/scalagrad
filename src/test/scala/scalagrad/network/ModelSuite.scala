@@ -48,4 +48,10 @@ class ModelSuite extends ScalagradSuite {
     assert(pred2d.length === X2d.length)
     assert(pred2d(0).length === 1)
   }
+
+  test("Perceptron fails with invalid parameters") {
+    assertThrows[java.lang.IllegalArgumentException] { Perceptron(2, List(), randomState = randomState ) }
+    assertThrows[java.lang.IllegalArgumentException] { Perceptron(0, List(16, 16, 1), randomState = randomState) }
+
+  }
 }
