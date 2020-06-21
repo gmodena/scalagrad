@@ -53,13 +53,13 @@ val optim = GradientDescent(model.parameters.toSeq)
 val X = dataset.X.map(v => v.map(f => Var(f)))
 val y = dataset.y.map(y => Var(y))
 
-(0 until epochs).foreack(_ => {
+(0 until epochs).foreach(_ => {
   val output = X.map(x => model(x))
   val loss = MSE(y, output)
   val regularization = model.parameters.map(p => p**2).reduce(_ + _) * Var(1e-4)
   val lossFunction = loss + regularization
 
-  optim.zeroGrad
+  optim.zeroGrad()
   lossFunction.backward()
   optim.step()
 })
