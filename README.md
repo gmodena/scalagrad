@@ -1,7 +1,7 @@
 ![](https://github.com/gmodena/scalagrad/workflows/build/badge.svg)
 # scalagrad
 A tiny, scalar-valued, reverse mode automatic differentiation library inspired by 
-[PuTorch](https://pytorch.org/) and Andrej Karpathy's [micrograd](https://github.com/karpathy/micrograd/).
+[PyTorch](https://pytorch.org/) and Andrej Karpathy's [micrograd](https://github.com/karpathy/micrograd/).
 
 `scalagrad` has been designed to educate myself, and to serve as a building block for
 further experimentation (e.g. source code transformation, tape-based autodiff, ...). 
@@ -22,7 +22,7 @@ This sections contains two basic examples of `scalagrad` in action. More can be 
 
 ## Differentiation
 
-The code below shows how to compute the derivative of the expression $\text{z} = x * y + sin(x)$
+The code below shows how to compute the derivative of the expression `z = x * y + sin(x)`.
 
 ```
 import scalagrad.Var
@@ -53,13 +53,13 @@ val optim = GradientDescent(model.parameters.toSeq)
 val X = dataset.X.map(v => v.map(f => Var(f)))
 val y = dataset.y.map(y => Var(y))
 
-(0 until epochs).foreack(_ => {
+(0 until epochs).foreach(_ => {
   val output = X.map(x => model(x))
   val loss = MSE(y, output)
   val regularization = model.parameters.map(p => p**2).reduce(_ + _) * Var(1e-4)
   val lossFunction = loss + regularization
 
-  optim.zeroGrad
+  optim.zeroGrad()
   lossFunction.backward()
   optim.step()
 })
